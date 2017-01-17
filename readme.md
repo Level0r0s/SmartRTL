@@ -2,6 +2,6 @@
 
 This is a little test
 
--first
--second
--third
+  - first
+  - second
+  - third
