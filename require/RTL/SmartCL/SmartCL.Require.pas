@@ -9,20 +9,22 @@ unit SmartCL.Require;
 
 interface
 
-uses W3C.DOM, System.Types, system.reader;
+uses W3C.DOM, System.Types;
 
 type
 
 EW3RequireJS = class(EW3Exception);
 
 TRequireError = class(TJsErrorObject)
+public
   property requireType: string;
   property requireModules: TStrArray;
 end;
 
-TW3RequireErrHandler = procedure (&error: TRequireError);
+TW3RequireErrHandler = procedure (ErrObj: TRequireError);
 
 TW3RequireJSConfig = class external "requirejs.config"
+public
   property enforceDefine: boolean;
   property baseUrl: string;
   property paths[name: string]: variant;
@@ -30,14 +32,20 @@ TW3RequireJSConfig = class external "requirejs.config"
 end;
 
 TW3RequireJS = class external "requirejs"
+public
   property config: TW3RequireJSConfig;
   property onError: TW3RequireErrHandler;
 end;
 
 function Require: TW3RequireJS; overload;
+
 procedure Require(Files: TStrArray); overload;
-procedure Require(Files: TStrArray; const Success: TProcedureRef); overload;
-procedure Require(Files: TStrArray; const Success: TProcedureRef;
+
+procedure Require(Files: TStrArray;
+  const Success: TProcedureRef); overload;
+
+procedure Require(Files: TStrArray;
+  const Success: TProcedureRef;
   const Failure: TW3RequireErrHandler); overload;
 
 implementation
